@@ -3,6 +3,7 @@
 var GAL_L = 3.78541, EPS = 1e-9;
 var $ = function (id) { return document.getElementById(id); };
 var unit = "gal"; // toggle state; bucket size follows it
+var FIELDS = ["tank", "pct", "bsize", "bhave", "no3"];
 
 function num(id, fb) {
   var v = parseFloat($(id).value);
@@ -19,6 +20,26 @@ function band(p) {
   return ["r", "Emergency range — fish stress risk",
     "For nitrate crises only: match temperature, dechlorinate every bucket, " +
     "pour slowly, and never change filter media on the same day."];
+}
+function save() { // routine tool: remember last setup across visits
+  try {
+    var s = { u: unit };
+    FIELDS.forEach(function (id) { s[id] = $(id).value; });
+    localStorage.setItem("aqa", JSON.stringify(s));
+  } catch (e) {}
+}
+function load() {
+  try {
+    var s = JSON.parse(localStorage.getItem("aqa") || "null");
+    if (!s) return;
+    if (s.u === "l" || s.u === "gal") unit = s.u;
+    FIELDS.forEach(function (id) {
+      if (s[id] !== undefined && s[id] !== "") $(id).value = s[id];
+    });
+    $("u-gal").className = unit === "gal" ? "on" : "";
+    $("u-l").className = unit === "l" ? "on" : "";
+    $("tank-u").textContent = unit; $("bsize-u").textContent = unit;
+  } catch (e) {}
 }
 function update() {
   var tank = num("tank", 0), pct = parseInt($("pct").value, 10) || 0;
@@ -65,7 +86,9 @@ function update() {
   var b = band(pct);
   $("badge").textContent = b[1]; $("badge").className = "badge " + b[0];
   $("pct").className = b[0];
-  $("warn").textContent = b[2]; $("warn").hidden = (b[0] !== "r");
+  $("warn").textContent = b[2]; $("warn").hidden = false;
+  $("warn").className = b[0] === "r" ? "warn" : "info";
+  save();
 }
 function setUnit(u) {
   if (u === unit) return;
@@ -82,9 +105,10 @@ function setUnit(u) {
   $("tank-u").textContent = u; $("bsize-u").textContent = u;
   update();
 }
-["tank", "pct", "bsize", "bhave", "no3"].forEach(function (id) {
+FIELDS.forEach(function (id) {
   $(id).addEventListener("input", update);
 });
 $("u-gal").addEventListener("click", function () { setUnit("gal"); });
 $("u-l").addEventListener("click", function () { setUnit("l"); });
+load();
 update();

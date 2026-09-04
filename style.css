@@ -34,6 +34,7 @@ h1{font-size:1.35rem;margin:.2em 0 .1em}
 .fish{position:absolute;left:14%;bottom:10%;font-size:1.8rem;animation:sway 4s ease-in-out infinite}
 .pct{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:1.6rem;text-shadow:0 1px 6px #0009;font-family:var(--mono)}
 .cap{color:#bcd6e2;font-size:.8rem;margin:.4em 0 0}
+.info{background:#e8f4fd;border:2px solid var(--bg1);border-radius:10px;padding:10px;margin:.9em 0 0;font-size:.9rem}
 .card{background:var(--card);border-radius:var(--radius);padding:16px;margin-top:14px;box-shadow:0 6px 24px #0006}
 label{display:block;font-weight:600;margin:10px 0}
 label:first-child{margin-top:0}
