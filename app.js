@@ -74,9 +74,10 @@ function update() {
   var bs = num("bsize", 0), have = parseInt($("bhave").value, 10) || 0;
 
   $("pct-out").textContent = pct + "%";
-  $("pct-label").textContent = pct + "% to remove";
+  $("pct-label").textContent = "▲ " + pct + "% water to remove";
   $("pct").setAttribute("aria-valuenow", pct);
-  $("water").style.height = pct + "%";
+  if ($("water-void")) $("water-void").style.height = pct + "%";
+  $("water").style.height = (100 - pct) + "%";
 
   if (!tank || !bs || !have) {
     $("v-gal").textContent = "—";
