@@ -13,12 +13,12 @@ function fmt(x) { // 2 decimals, trimmed ("13.70" -> "13.7", "5.00" -> "5")
 }
 function band(p) {
   if (p <= 30) return ["g", "Safe weekly change",
-    "Routine 10–30% changes keep nitrates low without stressing livestock."];
+    "Routine 10–30% changes hold nitrate under ~20 ppm without shocking livestock."];
   if (p <= 50) return ["y", "Deeper clean — watch parameters",
-    "Test ammonia / nitrite / pH after a 31–50% change and match temperature."];
+    "For stocked tanks or nitrate 20–40 ppm: test ammonia / nitrite / pH after, match temperature."];
   return ["r", "Emergency range — fish stress risk",
-    "Large 51–90% changes stress fish: match temperature, dechlorinate every " +
-    "bucket, pour slowly, and never change filter media on the same day."];
+    "For nitrate crises only: match temperature, dechlorinate every bucket, " +
+    "pour slowly, and never change filter media on the same day."];
 }
 function update() {
   var tank = num("tank", 0), pct = parseInt($("pct").value, 10) || 0;
@@ -29,8 +29,9 @@ function update() {
   if (!tank || !bs || !have) {
     $("v-gal").textContent = "—"; $("v-l").textContent = "—";
     $("buckets").textContent = "Enter tank, bucket size and bucket count.";
-    $("trips").textContent = ""; $("badge").textContent = "—";
-    $("badge").className = "badge"; $("warn").hidden = true;
+    $("trips").textContent = ""; $("no3-out").textContent = "";
+    $("badge").textContent = "—"; $("badge").className = "badge";
+    $("warn").hidden = true;
     return;
   }
   var tankGal = unit === "gal" ? tank : tank / GAL_L;
@@ -41,18 +42,29 @@ function update() {
   var full = Math.floor(vGal / bGal + EPS), rem = vGal - full * bGal;
   var exact = rem < 0.005;
   var remUnit = unit === "gal" ? rem : rem * GAL_L;
-  var bTxt = exact
-    ? "Exactly " + full + " full bucket" + (full === 1 ? "" : "s") + " — no partial."
-    : full + " full bucket" + (full === 1 ? "" : "s") +
+  var bTxt;
+  if (exact) {
+    bTxt = "Exactly " + full + " full bucket" + (full === 1 ? "" : "s") + " — no partial.";
+  } else if (full === 0) {
+    bTxt = "Just 1 partial bucket (" + fmt(remUnit) + " " + unit + ") — no full bucket needed.";
+  } else {
+    bTxt = full + " full bucket" + (full === 1 ? "" : "s") +
       " + 1 partial bucket (" + fmt(remUnit) + " " + unit + ").";
+  }
   $("buckets").textContent = bTxt;
   var need = full + (exact ? 0 : 1);
   var trips = Math.ceil(need / have);
   $("trips").textContent = trips <= 1
     ? "Fits in one trip with your " + have + " bucket" + (have === 1 ? "" : "s") + "."
     : "Needs " + trips + " trips with your " + have + " bucket" + (have === 1 ? "" : "s") + ".";
+  var n = parseFloat($("no3").value), no3 = "";
+  if (isFinite(n) && n >= 0) {
+    no3 = "Nitrate after ≈ " + fmt(n * (1 - pct / 100)) + " ppm (dilution estimate).";
+  }
+  $("no3-out").textContent = no3;
   var b = band(pct);
   $("badge").textContent = b[1]; $("badge").className = "badge " + b[0];
+  $("pct").className = b[0];
   $("warn").textContent = b[2]; $("warn").hidden = (b[0] !== "r");
 }
 function setUnit(u) {
@@ -70,7 +82,7 @@ function setUnit(u) {
   $("tank-u").textContent = u; $("bsize-u").textContent = u;
   update();
 }
-["tank", "pct", "bsize", "bhave"].forEach(function (id) {
+["tank", "pct", "bsize", "bhave", "no3"].forEach(function (id) {
   $(id).addEventListener("input", update);
 });
 $("u-gal").addEventListener("click", function () { setUnit("gal"); });

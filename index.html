@@ -33,7 +33,7 @@
       <span class="row"><input id="tank" type="number" min="0" step="any" value="55"><b id="tank-u">gal</b></span>
     </label>
     <label>Water change <output id="pct-out" for="pct">25%</output>
-      <input id="pct" type="range" min="10" max="90" step="1" value="25">
+      <input id="pct" class="g" type="range" min="10" max="90" step="1" value="25">
     </label>
     <div class="grid2">
       <label>Bucket size
@@ -43,6 +43,9 @@
         <input id="bhave" type="number" min="1" step="1" value="2">
       </label>
     </div>
+    <label class="opt">Nitrate now <span class="hint">ppm, optional — previews level after change</span>
+      <input id="no3" type="number" min="0" step="any" value="20">
+    </label>
   </section>
 
   <section class="card results">
@@ -50,11 +53,12 @@
     <div class="vol"><span id="v-l">—</span><small>liters</small></div>
     <p class="buckets" id="buckets">—</p>
     <p class="trips" id="trips">—</p>
+    <p class="nitrate" id="no3-out"></p>
     <p class="badge" id="badge">—</p>
     <p class="warn" id="warn" hidden></p>
   </section>
 
-  <footer>1 gal = 3.78541 L · pure front-end, no data leaves your browser</footer>
+  <footer>1 gal = 3.78541 L · bands: 25% weekly is the community gold standard · pure front-end, no data leaves your browser</footer>
 </main>
 <script src="app.js"></script>
 </body>
