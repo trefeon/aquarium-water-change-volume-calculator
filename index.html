@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Aquarium Water Change Calculator</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main class="wrap">
+  <header class="head">
+    <div>
+      <h1>Water Change Calculator</h1>
+      <p class="sub">How much water to remove &amp; replace, in buckets.</p>
+    </div>
+    <div class="units" role="group" aria-label="Units">
+      <button type="button" id="u-gal" class="on">gal</button>
+      <button type="button" id="u-l" >L</button>
+    </div>
+  </header>
+
+  <section class="tank" aria-hidden="true">
+    <div class="glass">
+      <div class="water" id="water"></div>
+      <div class="fish">🐠</div>
+      <div class="pct" id="pct-label">25%</div>
+    </div>
+    <p class="cap">water to remove</p>
+  </section>
+
+  <section class="card">
+    <label>Tank size
+      <span class="row"><input id="tank" type="number" min="0" step="any" value="55"><b id="tank-u">gal</b></span>
+    </label>
+    <label>Water change <output id="pct-out" for="pct">25%</output>
+      <input id="pct" type="range" min="10" max="90" step="1" value="25">
+    </label>
+    <div class="grid2">
+      <label>Bucket size
+        <span class="row"><input id="bsize" type="number" min="0" step="any" value="5"><b id="bsize-u">gal</b></span>
+      </label>
+      <label>Buckets I have
+        <input id="bhave" type="number" min="1" step="1" value="2">
+      </label>
+    </div>
+  </section>
+
+  <section class="card results">
+    <div class="vol"><span id="v-gal">—</span><small>gallons</small></div>
+    <div class="vol"><span id="v-l">—</span><small>liters</small></div>
+    <p class="buckets" id="buckets">—</p>
+    <p class="trips" id="trips">—</p>
+    <p class="badge" id="badge">—</p>
+    <p class="warn" id="warn" hidden></p>
+  </section>
+
+  <footer>1 gal = 3.78541 L · pure front-end, no data leaves your browser</footer>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
