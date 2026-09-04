@@ -89,15 +89,16 @@ body {
   0%, 100% { transform: rotate(180deg) translateY(0); }
   50% { transform: rotate(176deg) translateY(-4px); }
 }
+.bubbles { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 1; }
 .bubbles i {
-  position: absolute; bottom: 8%; width: 6px; height: 6px; border-radius: 50%;
-  background: rgba(255, 255, 255, 0.65); box-shadow: 0 0 5px #fff; animation: bubble-rise 3s linear infinite;
+  position: absolute; bottom: 4%; width: 6px; height: 6px; border-radius: 50%;
+  background: rgba(255, 255, 255, 0.7); box-shadow: 0 0 5px #fff; animation: bubble-rise 2.8s linear infinite;
 }
 .bubbles i:nth-child(1) { left: 65%; animation-delay: 0s; }
 .bubbles i:nth-child(2) { left: 78%; width: 5px; height: 5px; animation-delay: 1.2s; }
 .bubbles i:nth-child(3) { left: 88%; width: 8px; height: 8px; animation-delay: 2.1s; }
 @keyframes bubble-rise {
-  from { transform: translateY(0); opacity: 0; } 15% { opacity: 0.9; } to { transform: translateY(-110px); opacity: 0; }
+  from { transform: translateY(0); opacity: 0; } 10% { opacity: 0.9; } 85% { opacity: 0.9; } to { transform: translateY(-160px); opacity: 0; }
 }
 .controls { padding: 18px 20px; display: flex; flex-direction: column; gap: 14px; }
 .field { display: flex; flex-direction: column; }
