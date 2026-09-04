@@ -36,7 +36,9 @@ function load() {
       if (s[id] !== undefined && s[id] !== "") $(id).value = s[id];
     });
     $("u-gal").className = unit === "gal" ? "on" : "";
+    $("u-gal").setAttribute("aria-pressed", unit === "gal" ? "true" : "false");
     $("u-l").className = unit === "l" ? "on" : "";
+    $("u-l").setAttribute("aria-pressed", unit === "l" ? "true" : "false");
     $("tank-u").textContent = unit; $("bsize-u").textContent = unit;
   } catch (e) {}
 }
