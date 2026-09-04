@@ -8,87 +8,105 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐠</text></svg>">
 </head>
 <body>
-<main class="wrap">
-  <header class="head">
-    <div>
-      <h1>Water Change Calculator</h1>
-      <p class="sub">How much water to remove &amp; replace, in buckets.</p>
-    </div>
-    <div class="units" role="group" aria-label="Units">
-      <button type="button" id="u-gal" class="on" aria-pressed="true">gal</button>
-      <button type="button" id="u-l" aria-pressed="false">L</button>
-    </div>
-  </header>
-
-  <section class="tank" aria-hidden="true">
-    <div class="glass">
-      <div class="water" id="water"></div>
-      <div class="fish">🐠</div>
-      <div class="pct" id="pct-label">25%</div>
-      <div class="bubbles"><i></i><i></i><i></i></div>
-    </div>
-    <p class="cap">water to remove</p>
-  </section>
-
-  <section class="card">
-    <label for="tank">Tank size
-      <span class="row"><input id="tank" type="number" min="0" step="any" value="55" aria-label="Tank size"><b id="tank-u">gal</b></span>
-      <div class="chips" id="tank-chips">
-        <button type="button" data-val="10">10</button>
-        <button type="button" data-val="20">20</button>
-        <button type="button" data-val="40">40</button>
-        <button type="button" data-val="55">55</button>
-        <button type="button" data-val="75">75</button>
+<main class="widget-wrap">
+  <article class="widget" aria-label="Aquarium Water Change Volume Calculator">
+    <header class="widget-head">
+      <div class="title-group">
+        <h1>Aquarium Water Change</h1>
+        <p class="sub">Water change volume &amp; bucket calculator</p>
       </div>
-    </label>
-    <label for="pct">Water change <output id="pct-out" for="pct">25%</output>
-      <input id="pct" class="g" type="range" min="10" max="90" step="1" value="25" aria-label="Water change percentage">
-      <div class="bounds"><span>10%</span><span>90%</span></div>
-      <div class="chips pct-chips">
-        <button type="button" data-pct="15">15% Reef</button>
-        <button type="button" data-pct="25">25% Weekly</button>
-        <button type="button" data-pct="50">50% Deep</button>
+      <div class="units" role="group" aria-label="Volume unit selection">
+        <button type="button" id="u-gal" class="on" aria-pressed="true">gal</button>
+        <button type="button" id="u-l" aria-pressed="false">L</button>
       </div>
-    </label>
-    <div class="grid2">
-      <label for="bsize">Bucket size
-        <span class="row"><input id="bsize" type="number" min="0" step="any" value="5" aria-label="Bucket size"><b id="bsize-u">gal</b></span>
-      </label>
-      <label for="bhave">Buckets planned
-        <input id="bhave" type="number" min="1" step="1" value="2" aria-label="Number of buckets planned">
-      </label>
+    </header>
+
+    <div class="tank-frame" aria-hidden="true">
+      <div class="tank-glass">
+        <div class="water" id="water"></div>
+        <div class="fish">🐠</div>
+        <div class="water-pct" id="pct-label">25% to remove</div>
+        <div class="bubbles"><i></i><i></i><i></i></div>
+      </div>
     </div>
-    <label for="no3" class="opt">Nitrate now <span class="hint">ppm, optional — previews level after change</span>
-      <input id="no3" type="number" min="0" step="any" value="20" aria-label="Current nitrate in ppm">
-    </label>
-    <label class="check-row" for="displace">
-      <input id="displace" type="checkbox">
-      <span>Account for gravel &amp; decor (-15% net water)</span>
-    </label>
-  </section>
 
-  <section class="card results" aria-live="polite">
-    <div class="vol"><span id="v-gal">—</span><small>gallons</small></div>
-    <div class="vol"><span id="v-l">—</span><small>liters</small></div>
-    <p class="buckets" id="buckets">—</p>
-    <p class="trips" id="trips">—</p>
-    <p class="bweight" id="bweight"></p>
-    <p class="dechlor" id="dechlor"></p>
-    <p class="nitrate" id="no3-out"></p>
-    <p class="badge" id="badge">—</p>
-    <p class="warn" id="warn" hidden></p>
-    <details class="guide">
-      <summary>🐟 Safe Water Change Checklist</summary>
-      <ol>
-        <li>Unplug heater &amp; filter before water drops below minimum line.</li>
-        <li>Siphon substrate and drain target water into buckets.</li>
-        <li>Dose dechlorinator in fresh refill buckets &amp; match tank temperature (±2°F).</li>
-        <li>Refill tank gently, restart filter, and verify heater is fully submerged.</li>
-      </ol>
-    </details>
-  </section>
+    <section class="controls">
+      <div class="field">
+        <div class="field-head">
+          <label for="tank">Tank size</label>
+          <div class="chips" id="tank-chips">
+            <button type="button" data-val="10">10 gal</button>
+            <button type="button" data-val="20">20 gal</button>
+            <button type="button" data-val="40">40 gal</button>
+            <button type="button" data-val="55">55 gal</button>
+            <button type="button" data-val="75">75 gal</button>
+          </div>
+        </div>
+        <div class="input-row">
+          <input id="tank" type="number" min="0" step="any" value="55" aria-label="Tank size">
+          <span class="unit-badge" id="tank-u">gal</span>
+        </div>
+      </div>
 
-  <footer>1 gal = 3.78541 L · bands: 25% weekly is the community gold standard · pure front-end, no data leaves your browser</footer>
+      <div class="field">
+        <div class="field-head">
+          <label for="pct">Water change percentage</label>
+          <output id="pct-out" for="pct">25%</output>
+        </div>
+        <input id="pct" class="g" type="range" min="10" max="90" step="1" value="25" aria-label="Water change percentage" aria-valuenow="25">
+        <div class="slider-bounds">
+          <span>10% (Safe)</span>
+          <span>50%</span>
+          <span>90% (Emergency)</span>
+        </div>
+      </div>
+
+      <div class="grid-two">
+        <div class="field">
+          <label for="bsize">Bucket size</label>
+          <div class="input-row">
+            <input id="bsize" type="number" min="0" step="any" value="5" aria-label="Bucket size">
+            <span class="unit-badge" id="bsize-u">gal</span>
+          </div>
+        </div>
+        <div class="field">
+          <label for="bhave">Buckets planned</label>
+          <div class="input-row">
+            <input id="bhave" type="number" min="1" step="1" value="2" aria-label="Number of buckets planned">
+            <span class="unit-badge">qty</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="results" aria-live="polite" aria-label="Calculated water change volume">
+      <div class="volume-display">
+        <div class="vol-stat">
+          <span class="vol-num" id="v-gal">13.75</span>
+          <span class="vol-label">gallons to remove</span>
+        </div>
+        <div class="vol-divider" aria-hidden="true"></div>
+        <div class="vol-stat">
+          <span class="vol-num" id="v-l">52.05</span>
+          <span class="vol-label">liters to remove</span>
+        </div>
+      </div>
+
+      <div class="bucket-details">
+        <p class="bucket-math" id="buckets">2 full buckets needed + 1 partial bucket (3.75 gal leftover).</p>
+        <p class="bucket-trips" id="trips">Requires 2 trips with your 2 planned buckets.</p>
+      </div>
+
+      <div class="health-indicator">
+        <span class="badge g" id="badge">Safe weekly change (10–30%)</span>
+      </div>
+      <p class="warn-box" id="warn" hidden></p>
+    </section>
+
+    <footer class="widget-foot">
+      <span>1 gal = 3.78541 L · pure front-end math on one tidy page</span>
+    </footer>
+  </article>
 </main>
 <script src="app.js"></script>
 </body>
