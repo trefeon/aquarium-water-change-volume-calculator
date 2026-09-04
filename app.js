@@ -41,6 +41,7 @@ function load() {
     $("u-l").className = unit === "l" ? "on" : "";
     $("u-l").setAttribute("aria-pressed", unit === "l" ? "true" : "false");
     $("tank-u").textContent = unit; $("bsize-u").textContent = unit;
+    updateTankChips();
   } catch (e) {}
 }
 function update() {
@@ -113,7 +114,18 @@ function setUnit(u) {
   $("u-l").className = u === "l" ? "on" : "";
   $("u-l").setAttribute("aria-pressed", u === "l" ? "true" : "false");
   $("tank-u").textContent = u; $("bsize-u").textContent = u;
+  updateTankChips();
   update();
+}
+function updateTankChips() {
+  var vals = unit === "gal" ? [10, 20, 40, 55, 75] : [30, 60, 120, 200, 300];
+  var btns = document.querySelectorAll("#tank-chips button");
+  btns.forEach(function (b, i) {
+    if (vals[i] !== undefined) {
+      b.dataset.val = vals[i];
+      b.textContent = vals[i] + " " + unit;
+    }
+  });
 }
 FIELDS.forEach(function (id) {
   $(id).addEventListener("input", update);
@@ -121,5 +133,18 @@ FIELDS.forEach(function (id) {
 $("displace").addEventListener("change", update);
 $("u-gal").addEventListener("click", function () { setUnit("gal"); });
 $("u-l").addEventListener("click", function () { setUnit("l"); });
+document.querySelectorAll("#tank-chips button").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    $("tank").value = this.dataset.val;
+    update();
+  });
+});
+document.querySelectorAll(".pct-chips button").forEach(function (btn) {
+  btn.addEventListener("click", function () {
+    $("pct").value = this.dataset.pct;
+    update();
+  });
+});
 load();
+updateTankChips();
 update();
