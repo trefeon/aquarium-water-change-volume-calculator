@@ -71,13 +71,13 @@ body {
 }
 .fish.happy { animation: fish-swim 4.5s ease-in-out infinite; }
 @keyframes fish-swim {
-  0%, 100% { transform: translateX(0) scaleX(1); } 48% { transform: translateX(180px) scaleX(1); }
-  50% { transform: translateX(180px) scaleX(-1); } 98% { transform: translateX(0) scaleX(-1); }
+  0%, 100% { transform: translateX(0) scaleX(-1); } 48% { transform: translateX(180px) scaleX(-1); }
+  50% { transform: translateX(180px) scaleX(1); } 98% { transform: translateX(0) scaleX(1); }
 }
 .fish.alert { animation: fish-dart 2.5s ease-in-out infinite; }
 @keyframes fish-dart {
-  0%, 100% { transform: translateX(0) scaleX(1); } 48% { transform: translateX(120px) scaleX(1); }
-  50% { transform: translateX(120px) scaleX(-1); } 98% { transform: translateX(0) scaleX(-1); }
+  0%, 100% { transform: translateX(0) scaleX(-1); } 48% { transform: translateX(120px) scaleX(-1); }
+  50% { transform: translateX(120px) scaleX(1); } 98% { transform: translateX(0) scaleX(1); }
 }
 .fish.stressed { animation: fish-panic .5s ease-in-out infinite; filter: drop-shadow(0 0 6px #ef4444); }
 @keyframes fish-panic {
