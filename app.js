@@ -1,5 +1,4 @@
 "use strict";
-/* Aquarium Water Change Volume Calculator — Pure front-end widget math */
 var GAL_L = 3.78541, EPS = 1e-9;
 var $ = function (id) { return document.getElementById(id); };
 var unit = "gal";
@@ -9,21 +8,13 @@ function num(id, fb) {
   var v = parseFloat($(id).value);
   return (isFinite(v) && v > 0) ? v : fb;
 }
-
-function fmt(x) {
-  return String(Math.round(x * 100) / 100);
-}
+function fmt(x) { return String(Math.round(x * 100) / 100); }
 
 function band(p) {
-  if (p <= 30) {
-    return ["g", "Safe weekly change (10–30%)", ""];
-  }
-  if (p <= 50) {
-    return ["y", "Deeper clean (31–50%)", ""];
-  }
+  if (p <= 30) return ["g", "Safe weekly change (10–30%)", ""];
+  if (p <= 50) return ["y", "Deeper clean (31–50%)", ""];
   return [
-    "r",
-    "Emergency change (51–90%)",
+    "r", "Emergency change (51–90%)",
     "Fish stress warning: Large water changes (51–90%) cause sudden osmotic and temperature shifts. Match water temperature carefully, dechlorinate every bucket, pour slowly, and avoid cleaning filter media on the same day."
   ];
 }
@@ -80,35 +71,27 @@ function update() {
   $("water").style.height = (100 - pct) + "%";
 
   if (!tank || !bs || !have) {
-    $("v-gal").textContent = "—";
-    $("v-l").textContent = "—";
+    $("v-gal").textContent = "—"; $("v-l").textContent = "—";
     $("buckets").textContent = "Please enter valid tank size, bucket size, and bucket count.";
-    $("trips").textContent = "";
-    $("badge").textContent = "—";
-    $("badge").className = "badge";
-    $("warn").hidden = true;
+    $("trips").textContent = ""; $("badge").textContent = "—";
+    $("badge").className = "badge"; $("warn").hidden = true;
     return;
   }
 
   var tankGal = unit === "gal" ? tank : tank / GAL_L;
   var bGal = unit === "gal" ? bs : bs / GAL_L;
-  var vGal = tankGal * pct / 100;
-  var vL = vGal * GAL_L;
+  var vGal = tankGal * pct / 100, vL = vGal * GAL_L;
 
   $("v-gal").textContent = fmt(vGal);
   $("v-l").textContent = fmt(vL);
 
-  var full = Math.floor(vGal / bGal + EPS);
-  var rem = vGal - full * bGal;
+  var full = Math.floor(vGal / bGal + EPS), rem = vGal - full * bGal;
   var exact = rem < 0.005;
   var remUnit = unit === "gal" ? rem : rem * GAL_L;
 
-  var bTxt;
-  if (exact) {
-    bTxt = full + " full bucket" + (full === 1 ? "" : "s") + " needed (exact — no partial bucket leftover).";
-  } else {
-    bTxt = full + " full bucket" + (full === 1 ? "" : "s") + " needed + 1 partial bucket (" + fmt(remUnit) + " " + unit + " leftover).";
-  }
+  var bTxt = exact
+    ? full + " full bucket" + (full === 1 ? "" : "s") + " needed (exact — no partial bucket leftover)."
+    : full + " full bucket" + (full === 1 ? "" : "s") + " needed + 1 partial bucket (" + fmt(remUnit) + " " + unit + " leftover).";
   $("buckets").textContent = bTxt;
 
   var need = full + (exact ? 0 : 1);
@@ -129,6 +112,19 @@ function update() {
     $("warn").hidden = true;
   }
 
+  var fish = $("fish");
+  if (fish) {
+    if (pct <= 30) {
+      fish.textContent = "🐠"; fish.className = "fish happy";
+    } else if (pct <= 50) {
+      fish.textContent = "🐟"; fish.className = "fish alert";
+    } else if (pct <= 75) {
+      fish.textContent = "🐡"; fish.className = "fish stressed";
+    } else {
+      fish.textContent = "🐠"; fish.className = "fish belly-up";
+    }
+  }
+
   save();
 }
 
@@ -147,10 +143,7 @@ function setUnit(u) {
   update();
 }
 
-FIELDS.forEach(function (id) {
-  $(id).addEventListener("input", update);
-});
-
+FIELDS.forEach(function (id) { $(id).addEventListener("input", update); });
 $("u-gal").addEventListener("click", function () { setUnit("gal"); });
 $("u-l").addEventListener("click", function () { setUnit("l"); });
 
