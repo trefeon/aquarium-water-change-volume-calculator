@@ -13,13 +13,12 @@ function fmt(x) { // 2 decimals, trimmed ("13.70" -> "13.7", "5.00" -> "5")
   return String(Math.round(x * 100) / 100);
 }
 function band(p) {
-  if (p <= 30) return ["g", "Safe weekly change",
-    "Routine 10–30% changes hold nitrate under ~20 ppm without shocking livestock."];
-  if (p <= 50) return ["y", "Deeper clean — watch parameters",
-    "For stocked tanks or nitrate 20–40 ppm: test ammonia / nitrite / pH after, match temperature."];
-  return ["r", "Emergency range — fish stress risk",
-    "For nitrate crises only: match temperature, dechlorinate every bucket, " +
-    "pour slowly, and never change filter media on the same day."];
+  if (p <= 30) return ["g", "Safe weekly change (10–30%)",
+    "Routine safe weekly change: Maintains good water parameters and keeps nitrates low without stressing fish."];
+  if (p <= 50) return ["y", "Deeper clean (31–50%)",
+    "Deeper clean: Suitable for heavily stocked tanks or reducing elevated nitrates. Test parameters and match temperature."];
+  return ["r", "Emergency change (51–90%)",
+    "Fish stress warning: 51–90% is an emergency water change. Large shifts cause severe osmotic and temperature shock. Match water temperature carefully, dechlorinate every bucket, pour slowly, and avoid cleaning filter media on the same day."];
 }
 function save() { // routine tool: remember last setup across visits
   try {
@@ -45,7 +44,8 @@ function update() {
   var tank = num("tank", 0), pct = parseInt($("pct").value, 10) || 0;
   var bs = num("bsize", 0), have = parseInt($("bhave").value, 10) || 0;
   $("pct-out").textContent = pct + "%";
-  $("pct-label").textContent = pct + "%";
+  $("pct-label").textContent = pct + "% to remove";
+  $("pct").setAttribute("aria-valuenow", pct);
   $("water").style.height = pct + "%";
   if (!tank || !bs || !have) {
     $("v-gal").textContent = "—"; $("v-l").textContent = "—";
@@ -65,19 +65,16 @@ function update() {
   var remUnit = unit === "gal" ? rem : rem * GAL_L;
   var bTxt;
   if (exact) {
-    bTxt = "Exactly " + full + " full bucket" + (full === 1 ? "" : "s") + " — no partial.";
-  } else if (full === 0) {
-    bTxt = "Just 1 partial bucket (" + fmt(remUnit) + " " + unit + ") — no full bucket needed.";
+    bTxt = full + " full bucket" + (full === 1 ? "" : "s") + " needed (exact — no partial bucket leftover).";
   } else {
-    bTxt = full + " full bucket" + (full === 1 ? "" : "s") +
-      " + 1 partial bucket (" + fmt(remUnit) + " " + unit + ").";
+    bTxt = full + " full bucket" + (full === 1 ? "" : "s") + " needed + 1 partial bucket (" + fmt(remUnit) + " " + unit + " leftover).";
   }
   $("buckets").textContent = bTxt;
   var need = full + (exact ? 0 : 1);
   var trips = Math.ceil(need / have);
   $("trips").textContent = trips <= 1
-    ? "Fits in one trip with your " + have + " bucket" + (have === 1 ? "" : "s") + "."
-    : "Needs " + trips + " trips with your " + have + " bucket" + (have === 1 ? "" : "s") + ".";
+    ? "Fits in 1 trip with your " + have + " planned bucket" + (have === 1 ? "" : "s") + "."
+    : "Requires " + trips + " trips with your " + have + " planned bucket" + (have === 1 ? "" : "s") + ".";
   var n = parseFloat($("no3").value), no3 = "";
   if (isFinite(n) && n >= 0) {
     no3 = "Nitrate after ≈ " + fmt(n * (1 - pct / 100)) + " ppm (dilution estimate).";
@@ -101,7 +98,9 @@ function setUnit(u) {
   if (u === "gal" && !$("bsize").value) $("bsize").value = 5;
   unit = u;
   $("u-gal").className = u === "gal" ? "on" : "";
+  $("u-gal").setAttribute("aria-pressed", u === "gal" ? "true" : "false");
   $("u-l").className = u === "l" ? "on" : "";
+  $("u-l").setAttribute("aria-pressed", u === "l" ? "true" : "false");
   $("tank-u").textContent = u; $("bsize-u").textContent = u;
   update();
 }

@@ -30,11 +30,11 @@ h1{font-size:1.35rem;margin:.2em 0 .1em}
  @keyframes rise{from{transform:translateY(0);opacity:0}15%{opacity:.9}to{transform:translateY(-130px);opacity:0}}
 @keyframes sway{50%{transform:translateX(7px)}}
 .bounds{display:flex;justify-content:space-between;color:var(--muted);font-size:.75rem;margin-top:2px}
-.water{position:absolute;left:0;right:0;top:0;height:25%;background:linear-gradient(180deg,#6ce2d8,#1b7fa8);transition:height .15s}
-.fish{position:absolute;left:14%;bottom:10%;font-size:1.8rem;animation:sway 4s ease-in-out infinite}
+.water{position:absolute;left:0;right:0;top:0;height:25%;background:linear-gradient(180deg,#6ce2d8,#1b7fa8);border-bottom:3px solid rgba(255,255,255,0.75);box-shadow:0 3px 8px rgba(0,0,0,0.25);transition:height .15s}
+.fish{position:absolute;left:14%;bottom:12%;font-size:1.8rem;animation:sway 4s ease-in-out infinite}
 .pct{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:1.6rem;text-shadow:0 1px 6px #0009;font-family:var(--mono)}
 .cap{color:#bcd6e2;font-size:.8rem;margin:.4em 0 0}
-.info{background:#e8f4fd;border:2px solid var(--bg1);border-radius:10px;padding:10px;margin:.9em 0 0;font-size:.9rem}
+.info{background:#e8f4fd;border:2px solid var(--bg1);border-radius:10px;padding:12px;margin:.9em 0 0;font-size:.9rem;line-height:1.4}
 .card{background:var(--card);border-radius:var(--radius);padding:16px;margin-top:14px;box-shadow:0 6px 24px #0006}
 label{display:block;font-weight:600;margin:10px 0}
 label:first-child{margin-top:0}
@@ -54,8 +54,10 @@ output{float:right;color:var(--bg1);font-family:var(--mono)}
 .buckets{font-weight:700;margin:.7em 0 .2em}
 .trips{color:var(--muted);margin:.2em 0}
 .nitrate{color:var(--bg1);font-weight:600;margin:.4em 0 .8em}
-.badge{display:inline-block;padding:8px 18px;border-radius:999px;color:#fff;font-weight:700}
+.badge{display:inline-block;padding:8px 18px;border-radius:999px;color:#fff;font-weight:700;font-size:.95rem;line-height:1.2}
 .badge.g{background:var(--green)} .badge.y{background:var(--yellow)} .badge.r{background:var(--red)}
-.warn{background:#fdeceb;border:2px solid var(--red);border-radius:10px;padding:10px;margin:.9em 0 0;font-size:.9rem}
+.warn{background:#fdeceb;border:2px solid var(--red);border-radius:10px;padding:12px;margin:.9em 0 0;font-size:.9rem;line-height:1.4}
+input:focus-visible,button:focus-visible{outline:2px solid #6ce2d8;outline-offset:2px}
+@media(prefers-reduced-motion:reduce){.bubbles i,.fish,.water{animation:none!important;transition:none!important}}
 footer{text-align:center;color:#9dbfcf;font-size:.75rem;margin-top:16px}
 @media(min-width:768px){ .wrap{max-width:640px} h1{font-size:1.6rem} }

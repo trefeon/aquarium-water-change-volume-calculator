@@ -15,8 +15,8 @@
       <p class="sub">How much water to remove &amp; replace, in buckets.</p>
     </div>
     <div class="units" role="group" aria-label="Units">
-      <button type="button" id="u-gal" class="on">gal</button>
-      <button type="button" id="u-l" >L</button>
+      <button type="button" id="u-gal" class="on" aria-pressed="true">gal</button>
+      <button type="button" id="u-l" aria-pressed="false">L</button>
     </div>
   </header>
 
@@ -31,23 +31,23 @@
   </section>
 
   <section class="card">
-    <label>Tank size
-      <span class="row"><input id="tank" type="number" min="0" step="any" value="55"><b id="tank-u">gal</b></span>
+    <label for="tank">Tank size
+      <span class="row"><input id="tank" type="number" min="0" step="any" value="55" aria-label="Tank size"><b id="tank-u">gal</b></span>
     </label>
-    <label>Water change <output id="pct-out" for="pct">25%</output>
-      <input id="pct" class="g" type="range" min="10" max="90" step="1" value="25">
+    <label for="pct">Water change <output id="pct-out" for="pct">25%</output>
+      <input id="pct" class="g" type="range" min="10" max="90" step="1" value="25" aria-label="Water change percentage">
       <div class="bounds"><span>10%</span><span>90%</span></div>
     </label>
     <div class="grid2">
-      <label>Bucket size
-        <span class="row"><input id="bsize" type="number" min="0" step="any" value="5"><b id="bsize-u">gal</b></span>
+      <label for="bsize">Bucket size
+        <span class="row"><input id="bsize" type="number" min="0" step="any" value="5" aria-label="Bucket size"><b id="bsize-u">gal</b></span>
       </label>
-      <label>Buckets I have
-        <input id="bhave" type="number" min="1" step="1" value="2">
+      <label for="bhave">Buckets planned
+        <input id="bhave" type="number" min="1" step="1" value="2" aria-label="Number of buckets planned">
       </label>
     </div>
-    <label class="opt">Nitrate now <span class="hint">ppm, optional — previews level after change</span>
-      <input id="no3" type="number" min="0" step="any" value="20">
+    <label for="no3" class="opt">Nitrate now <span class="hint">ppm, optional — previews level after change</span>
+      <input id="no3" type="number" min="0" step="any" value="20" aria-label="Current nitrate in ppm">
     </label>
   </section>
 
