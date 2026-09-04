@@ -22,7 +22,7 @@ function band(p) {
 }
 function save() { // routine tool: remember last setup across visits
   try {
-    var s = { u: unit };
+    var s = { u: unit, displace: $("displace").checked };
     FIELDS.forEach(function (id) { s[id] = $(id).value; });
     localStorage.setItem("aqa", JSON.stringify(s));
   } catch (e) {}
@@ -32,6 +32,7 @@ function load() {
     var s = JSON.parse(localStorage.getItem("aqa") || "null");
     if (!s) return;
     if (s.u === "l" || s.u === "gal") unit = s.u;
+    if (s.displace !== undefined) $("displace").checked = !!s.displace;
     FIELDS.forEach(function (id) {
       if (s[id] !== undefined && s[id] !== "") $(id).value = s[id];
     });
@@ -52,12 +53,15 @@ function update() {
   if (!tank || !bs || !have) {
     $("v-gal").textContent = "—"; $("v-l").textContent = "—";
     $("buckets").textContent = "Enter tank, bucket size and bucket count.";
-    $("trips").textContent = ""; $("no3-out").textContent = "";
+    $("trips").textContent = ""; $("bweight").textContent = "";
+    $("dechlor").textContent = ""; $("no3-out").textContent = "";
     $("badge").textContent = "—"; $("badge").className = "badge";
     $("warn").hidden = true;
     return;
   }
-  var tankGal = unit === "gal" ? tank : tank / GAL_L;
+  var displace = $("displace").checked;
+  var netTank = displace ? tank * 0.85 : tank;
+  var tankGal = unit === "gal" ? netTank : netTank / GAL_L;
   var bGal = unit === "gal" ? bs : bs / GAL_L;
   var vGal = tankGal * pct / 100, vL = vGal * GAL_L;
   $("v-gal").textContent = fmt(vGal);
@@ -77,6 +81,11 @@ function update() {
   $("trips").textContent = trips <= 1
     ? "Fits in 1 trip with your " + have + " planned bucket" + (have === 1 ? "" : "s") + "."
     : "Requires " + trips + " trips with your " + have + " planned bucket" + (have === 1 ? "" : "s") + ".";
+  var bwLbs = fmt(bGal * 8.34), bwKg = fmt(bGal * 3.78541);
+  $("bweight").textContent = "Weight per full bucket: ~" + bwLbs + " lbs (" + bwKg + " kg).";
+  var drops = Math.max(1, Math.round(vGal * 2));
+  var ml = fmt(vGal * 0.1);
+  $("dechlor").textContent = "💧 Dechlorinator dose: ~" + drops + " drops (" + ml + " mL) for new water.";
   var n = parseFloat($("no3").value), no3 = "";
   if (isFinite(n) && n >= 0) {
     no3 = "Nitrate after ≈ " + fmt(n * (1 - pct / 100)) + " ppm (dilution estimate).";
@@ -109,6 +118,7 @@ function setUnit(u) {
 FIELDS.forEach(function (id) {
   $(id).addEventListener("input", update);
 });
+$("displace").addEventListener("change", update);
 $("u-gal").addEventListener("click", function () { setUnit("gal"); });
 $("u-l").addEventListener("click", function () { setUnit("l"); });
 load();

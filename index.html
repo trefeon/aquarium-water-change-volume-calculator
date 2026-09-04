@@ -49,6 +49,10 @@
     <label for="no3" class="opt">Nitrate now <span class="hint">ppm, optional — previews level after change</span>
       <input id="no3" type="number" min="0" step="any" value="20" aria-label="Current nitrate in ppm">
     </label>
+    <label class="check-row" for="displace">
+      <input id="displace" type="checkbox">
+      <span>Account for gravel &amp; decor (-15% net water)</span>
+    </label>
   </section>
 
   <section class="card results" aria-live="polite">
@@ -56,6 +60,8 @@
     <div class="vol"><span id="v-l">—</span><small>liters</small></div>
     <p class="buckets" id="buckets">—</p>
     <p class="trips" id="trips">—</p>
+    <p class="bweight" id="bweight"></p>
+    <p class="dechlor" id="dechlor"></p>
     <p class="nitrate" id="no3-out"></p>
     <p class="badge" id="badge">—</p>
     <p class="warn" id="warn" hidden></p>

@@ -47,6 +47,8 @@ output{float:right;color:var(--bg1);font-family:var(--mono)}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .opt{margin-top:10px}
 .hint{color:var(--muted);font-weight:400;font-size:.8rem}
+.check-row{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:.85rem;color:var(--bg1);cursor:pointer;font-weight:500}
+.check-row input{width:16px;height:16px;accent-color:var(--bg1);cursor:pointer}
 .results{text-align:center}
 .vol{display:inline-block;margin:4px 14px}
 .vol span{font-size:2rem;font-weight:800;font-family:var(--mono)}
@@ -54,6 +56,8 @@ output{float:right;color:var(--bg1);font-family:var(--mono)}
 .buckets{font-weight:700;margin:.7em 0 .2em}
 .trips{color:var(--muted);margin:.2em 0}
 .nitrate{color:var(--bg1);font-weight:600;margin:.4em 0 .8em}
+.bweight{color:var(--muted);font-size:.85rem;margin:.2em 0}
+.dechlor{color:#0b4f6c;font-size:.85rem;font-weight:600;margin:.2em 0 .6em}
 .badge{display:inline-block;padding:8px 18px;border-radius:999px;color:#fff;font-weight:700;font-size:.95rem;line-height:1.2}
 .badge.g{background:var(--green)} .badge.y{background:var(--yellow)} .badge.r{background:var(--red)}
 .warn{background:#fdeceb;border:2px solid var(--red);border-radius:10px;padding:12px;margin:.9em 0 0;font-size:.9rem;line-height:1.4}
