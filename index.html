@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Aquarium Water Change Calculator</title>
 <link rel="stylesheet" href="style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🐠</text></svg>">
 </head>
 <body>
 <main class="wrap">
@@ -35,6 +36,7 @@
     </label>
     <label>Water change <output id="pct-out" for="pct">25%</output>
       <input id="pct" class="g" type="range" min="10" max="90" step="1" value="25">
+      <div class="bounds"><span>10%</span><span>90%</span></div>
     </label>
     <div class="grid2">
       <label>Bucket size
@@ -49,7 +51,7 @@
     </label>
   </section>
 
-  <section class="card results">
+  <section class="card results" aria-live="polite">
     <div class="vol"><span id="v-gal">—</span><small>gallons</small></div>
     <div class="vol"><span id="v-l">—</span><small>liters</small></div>
     <p class="buckets" id="buckets">—</p>
