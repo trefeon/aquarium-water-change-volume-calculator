@@ -198,7 +198,7 @@ label {
 
 input[type=number] {
   width: 100%;
-  padding: 8px 48px 8px 12px;
+  padding: 8px 64px 8px 12px;
   border: 1.5px solid var(--line);
   border-radius: 10px;
   font: inherit;
